@@ -46,57 +46,7 @@ const Login = (props) => {
         }
     }
   
-    const handleSubmit1 = (e) => {
-        e.preventDefault();
-        //axios.defaults.withCredentials = true;
-        // CSRF COOKIE
-        const headers1 = {
-                        "Accept": "application/json"
-                    };
-        axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-            axios.post('https://backend.virtualsfadmin.com/api/login', {
-                email: email,
-                password: password
-            }).then(response => {
-                console.log(response.data);
-                if(response.data.success == true) {
-                    localStorage.setItem('user', JSON.stringify(response.data.user_info));
-                    localStorage.setItem('token', JSON.stringify(response.data.user_info['token']));
-                    console.log ("------token-----", response.data.user_info.token);
-                    const headers = {
-                        "Authorization": `Bearer ${ response.data.user_info['token'] }`
-                    };
-                    // axios.get("https://backend.virtualsfadmin.com/api/user", {
-                    // headers: }).
-                    axios.get("https://backend.virtualsfadmin.com/api/user", {headers: headers} ).then((response) => {
-                        /*setUserId(response.data.id)
-                        setUserName(response.data.name)
-                        setErrorMessage("")
-                        setAuthStatus(LOGGED_IN)*/
-                        console.log("---------", response.data);
-
-                        userHasAuthenticated(true);
-                        navigate('/dashboard');
-
-                    }, (error) => {
-                         setErrorMessage("Could not complete the login")
-                    });
-                } else {
-                    setErrorMessage(response.data.error);
-                }
-            },
-            (error) => {
-                if (error.response) {
-                            setErrorMessage(error.response.data.error)
-                } else {
-                           setErrorMessage("Could not complete the login")
-                }
-            }
-        )},
-        (error) => {
-             setErrorMessage("Could not complete the login")
-        })
-    }
+    
     return (
             <div className="authincation section-padding">
                 <div className="container h-100">

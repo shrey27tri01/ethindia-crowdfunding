@@ -15,54 +15,11 @@ const ResetPassword = (props) => {
     const navigate = useNavigate();
     
     useEffect(() => {
-        axios.defaults.withCredentials = true;
-        // CSRF COOKIE
-        axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-            axios.post('https://backend.virtualsfadmin.com/api/reset-password', {
-                token: token
-            }).then(response => {
-                if(response.data.success) {
-                    setEmail(response.data.user.email)
-                } else {
-                    setErrorMessage(response.data.error)
-                    navigate('/login');
-                }
-            },
-            (error) => {
-                setErrorMessage("Something went wrong!");
-                navigate('/login');
-            }
-        )},
-        (error) => {
-             setErrorMessage("Something went wrong!");
-             navigate('/login');
-        })
+        
     }, [navigate]);
   
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.defaults.withCredentials = true;
-        // CSRF COOKIE
-        axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-            axios.post('https://backend.virtualsfadmin.com/api/new-password', {
-                token:token,
-                email: email,
-                password:password,
-                password_confirmation:password_confirmation
-            }).then(response => {
-                if(response.data.success) {
-                    navigate('/login');
-                } else {
-                    setErrorMessage(response.data.error)
-                }
-            },
-            (error) => {
-                setErrorMessage("Something went wrong!");
-            }
-        )},
-        (error) => {
-             setErrorMessage("Something went wrong!");
-        })
     }
     return (
             <div className="authincation section-padding">

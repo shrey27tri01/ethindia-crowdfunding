@@ -21,23 +21,7 @@ const Forgot = (props) => {
   
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.defaults.withCredentials = true;
-        // CSRF COOKIE
-        axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-            axios.post('https://backend.virtualsfadmin.com/api/forgot-password', {
-                email: email
-            }).then(response => {
-                if(response.data.error) {
-                    setErrorMessage(response.data.error)
-                }
-            },
-            (error) => {
-                setErrorMessage("Something went wrong!");
-            }
-        )},
-        (error) => {
-             setErrorMessage("Something went wrong!");
-        })
+        
     }
     return (
             <div className="authincation section-padding">

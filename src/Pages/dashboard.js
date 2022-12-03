@@ -443,8 +443,8 @@ const Dashboard = ({navigation}) => {
             e.preventDefault();
             handleClose();
 
-
-            if (buyTotalSupply <= total_supply)
+            console.log("--", buyTotalSupply, "---", total_supply)
+            if (parseInt(buyTotalSupply) < parseInt(total_supply))
             {
                 setErrorMessage("Amount is larger than total Supply");
                 setError(true);
@@ -551,7 +551,7 @@ const Dashboard = ({navigation}) => {
                     "title": t.title,
                     "address": "try",
                     "owner_wallet_address": t.owner_wallet_address,
-                    "available_supply": 1,
+                    "available_supply": parseInt(t.available_supply) - parseInt(total_supply),
                     "total_supply": t.total_supply,
                     "contract_address": t.contract_address,
                     "property_image": t.property_image,
@@ -563,27 +563,6 @@ const Dashboard = ({navigation}) => {
 
 
 
-            // var config = {
-            //     method: 'post',
-            //     url: 'http://localhost:3000/listings    ',
-            //     // headers: headers,
-            //     data : finalTemp
-            //   };
-
-            //   axios(config)
-            //   .then(function (response) {
-            //     console.log(JSON.stringify(response.data));
-            //     // setErrorMessage("Purchase is requested Successfully");
-            //     // setError(true);
-            //     // navigate('/dashboard');
-            //     // setLoading(false);
-            //     // navigate('/dashboard');
-            //   })
-            //   .catch(function (error) {
-            //     console.log(error);
-            //     // setLoading(false);
-            //     navigate('/dashboard');
-            //   });
 
             const res1 = await axios.put(`http://localhost:3000/listings/${listing_id}`, finalTemp);
             console.log(res1.data);
@@ -611,42 +590,7 @@ const Dashboard = ({navigation}) => {
               });
             
             
-            // const headers = {
-            //     'Content-Type': 'application/json',
-            //             "Authorization": `Bearer ${ userToken }`
-            //         };
-            // axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-            //     axios.post('https://backend.virtualsfadmin.com/api/listing/buy', {
-            //         buyer_wallet_address: owner_wallet_address,
-            //         owner_wallet_address: mainOwner,
-            //         supply_amount: total_supply,
-            //         listing_id: listing_id,
-            //         user_id: user_Id,
-            //         contract_address:buyContract,
-            //         headers: headers
-            //     }, {headers: headers}).then(response => {
-            //         console.log(response)
-            //         setError(false);
-            //         // alert("Purchase is requested Successfully");
-            //         setErrorMessage("Purchase is requested Successfully");
-            //         setError(true);
-
-            //         // window.location.reload();
-            //         //navigate('/dashboard');
-               
-            //     },
-            //     (error) => {
-            //         if (error.response) {
-            //                     setErrorMessage(error.response.data.message)
-            //         } else {
-            //                    setErrorMessage("Could not complete the login")
-            //         }
-            //     }
-            // )},
-            // (error) => {
-            //      setErrorMessage("Could not complete the login")
-            // })
-
+           
         }
     }
 
@@ -791,15 +735,13 @@ const Dashboard = ({navigation}) => {
                                                     </div>
                                                 </div>
                                                 {isDisplay2? (
-                                                    <div className="d-flex justify-content-center">
+                                                    <div className="d-flex">
                                                         <p className="btn btn-info"  onClick={()=>{window.open("https://mumbai.polygonscan.com/token/" + item.contract_address , '_blank', 'noopener,noreferrer')}}>Polygonscan</p>
-                                                        <p onClick={()=>{localStorage.setItem('item', item.id);navigate('/item');}} className="btn btn-secondary">Details</p>
-                                                    </div>
+                                                        </div>
                                                 ):(
-                                                    <div className="d-flex justify-content-center">
+                                                    <div className="d-flex">
                                                         <p className="btn btn-primary" onClick={()=>{handleShow(item.owner_wallet_address, item.id, item.contract_address, item.available_supply)}}>Buy</p>
-                                                        <p onClick={()=>{localStorage.setItem('item', item.id);navigate('/item');}} className="btn btn-secondary">Details</p>
-                                                    </div>
+                                                         </div>
                                                 )}
                                                 
                                                 

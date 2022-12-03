@@ -3,7 +3,6 @@ import HEADER from '../components/header';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import {ethers, ContractFactory} from 'ethers';
-import simple_token_abi from '../Contracts/simple_token_abi.json';
 import DemoToken_Abi from '../Contracts/simple_token_abi.json'; 
 import DemoToken_Bytecode from '../Contracts/simpleTokenBytecode';
 import ActivityIndicator from 'react-activity-indicator';
@@ -48,14 +47,9 @@ const Upload = () => {
     const [isDisplay, setIsDisplay] = useState(false);
 
     useEffect(() => {
-        // console.log("-----------inside ---------");
         const provider = window.localStorage.getItem("provider");
             if (provider) 
             {
-                // activate(connectors[provider]);
-                // setConnButtonText('Disconnect');
-
-                // console.log("-----Active address-----", truncateAddress(account), "--------", provider);
 
                 if(provider == "MetaMask")
                 {
@@ -70,59 +64,26 @@ const Upload = () => {
             }
             else
             {
-                // activate(connectors.injected);
                 setConnButtonText('Connect Wallet');
                 console.log("-----not Active address-----", truncateAddress(owner_wallet_address), "-------");
             }
         if (!localStorage.getItem('user')) {
-            // navigate('/', {user_id : });
             navigate('/login');
         }
         else
         {
-            // navigate('/', {user_id : });
-            // let x = JSON.parse(localStorage.getItem('user'));
-            //-------------- Login Type---------------------
             let x = JSON.parse(localStorage.getItem('user'));
                 if(x.isAdmin)
                 {
-                    // console.log("----------isAdmin-------");
-                    // getData1(x.id);
                     setIsDisplay(true);
 
                 }
-            //----------------------------------------------
-            // console.log("-------upload-----------", x, "----------", x.id);
             setUserId(x.id);
             setUserToken(x.token)
         }
     }, [navigate]);
 
-    const DemoHandle = async() => {
-        try{
-            let tempProvider = new ethers.getDefaultProvider();
-            
-            console.log("---tempProvider----", tempProvider);
-            let tempSigner = new ethers.VoidSigner("0x6F4BC961F69827749535E99B48E0aA921f753393", tempProvider);
-            console.log("---tempsigner----", tempSigner);
-
-            // const factory = new ContractFactory(DemoToken_Abi, DemoToken_Bytecode, tempSigner);
-            // console.log("-------1111--------", factory);
-            // const contract = await factory.deploy(total_supply + "000000000000000000");
-            // console.log("-------22222--------");
-            // let address = contract.address;
-            // console.log("-------33333--------");
-            // let details = await contract.deployTransaction.wait();
-            // console.log("----address---", address, "-----details------", details);
-            // handleSubmitFinal(details.contractAddress);
-        }
-        catch(err)
-        {
-            console.log("--------err-----", err);
-            setLoading(false);
-        }
-    }
-
+    
     const handleSubmit = async(e) => {
         setLoading(true);
         e.preventDefault();
@@ -186,10 +147,6 @@ const Upload = () => {
             }
 
 
-
-            // for metamask
-            // let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
-            // let tempSigner = tempProvider.getSigner();
 
 
             let tempProvider = new ethers.providers.Web3Provider(ethereum);
@@ -269,22 +226,8 @@ const Upload = () => {
             
 
 
-
-
-    // let contractAddress = '0x41134f490B9215C02ffF73c9d83F3eBFC3EbB2EA';
-
-    // const [errorMessage, setErrorMessage] = useState(null);
-    const [defaultAccount, setDefaultAccount] = useState(null);
     const [connButtonText, setConnButtonText] = useState('Connect Wallet');
 
-    // const [provider, setProvider] = useState(null);
-    const [signer, setSigner] = useState(null);
-    const [contract, setContract] = useState(null);
-
-    const [tokenName, setTokenName] = useState("");
-    const [tokenSymbol, setTokenSymbol] = useState("");
-    const [balance, setBalance] = useState(null);
-    const [transferHash, setTransferHash] = useState(null);
 
     const disconnect = () => {
         refreshState();      };
@@ -375,68 +318,10 @@ const Upload = () => {
         
     }
 
-    
-
-    const updateBalance = async () => {
-        let balanceBigN = await contract.balanceOf(defaultAccount);
-        console.log("try1 : ", balanceBigN);
-        let balanceNumber = balanceBigN.toString();
-
-        let tokenDecimals = await contract.decimals();
-        let tokenBalance = balanceNumber / Math.pow(10, tokenDecimals);
-
-        let tokenName = await contract.name();
-        let tokenSymbol = await contract.symbol();
-        console.log("try2 : ", tokenName, "------------", tokenSymbol, "-----------", tokenBalance);
-        setTokenName(tokenName);
-        setTokenSymbol(tokenSymbol);
-
-        setBalance(toFixed(tokenBalance));  
-
-
-    }
-
-   function toFixed(x) {
-   if (Math.abs(x) < 1.0) {
-      var e = parseInt(x.toString().split('e-')[1]);
-      if (e) {
-         x *= Math.pow(10, e - 1);
-         x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
-      }
-   } else {
-      var e = parseInt(x.toString().split('+')[1]);
-      if (e > 20) {
-         e -= 20;
-         x /= Math.pow(10, e);
-         x += (new Array(e + 1)).join('0');
-      }
-   }
-   return x;
-}
 
     
 
-    // useEffect(() => {
-    //     if (contract != null) {
-    //         updateBalance();
-    //         updateTokenName();
-    //     }
-    // }, [contract]);
 
-    const updateTokenName = async () => {
-        setTokenName(await contract.name());
-    }
-
-
-    // const handleNoteImageInput = (e) => {
-    //       e.persist();
-    //       let name = e.target.name;
-    //       let value = e.target.value;
-    //       setNoteImageArray({ ...noteImageArray, file_url: [...e.target.files] });
-    //       //validateNoteFormData(name,imageFile);
-    //       setNoteInput({ ...noteInput, [e.target.name]: e.target.value });
-
-    //  }
 
 
      const handleImage = (e) =>{

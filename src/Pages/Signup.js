@@ -18,46 +18,7 @@ const Signup = (props) => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        // axios.defaults.withCredentials = true;
         
-        // CSRF COOKIE
-        axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-            axios.post("https://backend.virtualsfadmin.com/api/register", {
-                name: name,
-                email: email,
-                password: password
-            }).then(response => {
-
-                console.log("response", response);
-                    localStorage.setItem('user', JSON.stringify(response.data.user));
-                    localStorage.setItem('token', JSON.stringify(response.data.user['token']));
-                    const headers = {
-                        "Authorization": `Bearer ${ response.data.user['token'] }`
-                    };
-                    
-                axios.get("https://backend.virtualsfadmin.com/api/user", {headers: headers}).then((response) => {
-                   /* setUserId(response.data.id)
-                    setUserName(response.data.name)
-                    setErrorMessage("")
-                    setAuthStatus(LOGGED_IN)*/
-                    // store the user in localStorage
-                    // HasAuthenticated(true);  
-                    navigate('/dashboard');
-                }, (error) => {
-                    setErrorMessage("Could not complete the login")
-                }
-            )},
-            (error) => {
-                if (error.response) {
-                    setErrorMessage(error.response.data.message)
-                } else {
-                    setErrorMessage("Could not complete the login")
-                }
-            }
-        )},
-        (error) => {
-            setErrorMessage("Could not complete the login")
-        })
     }
     return (
             <div className="authincation section-padding">

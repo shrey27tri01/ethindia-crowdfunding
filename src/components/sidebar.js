@@ -28,12 +28,6 @@ return (
     <div className="menu">
         <ul>
             <li>
-                <a href="./">
-                    <span><i className="ri-home-fill"></i></span>
-                    <span className="nav-text">Home</span>
-                </a>
-            </li>
-            <li>
                 <a href="./dashboard">
                     <span><i className="ri-layout-grid-fill"></i></span>
                     <span className="nav-text">Dashboard</span>

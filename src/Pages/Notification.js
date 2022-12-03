@@ -165,9 +165,9 @@ const Notification = ({navigation}) => {
                 },
                 rpcUrls: ["https://polygon-mumbai.infura.io/v3/2fc633a5df2141d68ac1bf7dbc620710"],
                 blockExplorerUrls: ["https://polygonscan.com/"]
-              },
+              }
   
-};
+    }
 
     const handleNetworkSwitch = async (networkName) => {
         setErrorMessage();
@@ -278,63 +278,6 @@ const Notification = ({navigation}) => {
         setBuying(tempFinal)
         
         
-        // // axios.defaults.withCredentials = true;
-        // console.log("token", token)
-        // // CSRF COOKIE
-        // const headers = {
-        //                 "Authorization": `Bearer ${ token }`
-        //             };
-        // axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-        //         axios.get(`https://backend.virtualsfadmin.com/api/purchases`, {headers: headers}
-        //     ).then(response => {
-                    
-        //             // navigate('/');
-        //             var temp = response.data.data;
-        //             var temp1 = [];
-                    
-
-        //             for(var i =0; i<temp.length; i++)
-        //             {
-
-        //                 if(temp[i].status == "Pending")
-        //                 {
-        //                     setIsDisplay(true);
-        //                     temp1.push({
-        //                         id : temp[i].id,
-        //                         listing_id : temp[i].listing_id,
-        //                         buyer_wallet_address: temp[i].buyer_wallet_address,
-        //                         owner_wallet_address: temp[i].owner_wallet_address,
-        //                         supply_amount: temp[i].supply_amount,
-        //                         status: temp[i].status,
-        //                         contract_address: temp[i].contract_address,
-        //                         created_at: temp[i].created_at,
-        //                         buyer_name: temp[i].buyer_name,
-        //                         listing_title:temp[i].listing_title,
-        //                     });
-        //                 }
-                        
-                            
-                        
-                        
-        //             }
-                    
-        //             setBuying(temp1);
-        //             console.log("-----buy------", temp1);
-                    
-                    
-               
-        //         },
-        //         (error) => {
-        //             if (error.response) {
-        //                         setErrorMessage(error.response.data.message)
-        //             } else {
-        //                        setErrorMessage("Could not complete the login")
-        //             }
-        //         }
-        //     )},
-        //     (error) => {
-        //          setErrorMessage("Could not complete the login")
-        //     })
     }
 
 
@@ -393,48 +336,12 @@ const Notification = ({navigation}) => {
             }
     }, [navigation]);
 
+    
 
 
-    const handleSubmit = (e) => {
-        if(isNaN(total_supply))
-        {
-            setErrorMessage("Please Enter Number only");
-            setError(true);
-            return
-        }
-        else{
-            e.preventDefault();
-            handleClose();
 
 
-            if (buyTotalSupply <= total_supply)
-            {
-                setErrorMessage("Amount is larger than total Supply");
-                setError(true);
-            }
-            else{
-                if (owner_wallet_address== "")
-                {
-                    // alert("Connect wallet first")
-                    setErrorMessage("Connect wallet first");
-                    setError(true);
-                }
-                else
-                {
-                    BuyApi(buyOwner, buyId );
-                    //statusChange(buyId, buyListingId, "Approved");
-                }
-            }
-        }
-        
-        
-        // alert(total_supply);
-        
-        // return false;
-    }
-
-
-    const statusChange = async (id , listing_id, status) =>{
+    const statusChange = async (id , listing_id, status, supply) =>{
 
         const res = await axios.get('http://localhost:3000/purchase');
         var temp = res.data;
@@ -470,107 +377,42 @@ const Notification = ({navigation}) => {
             setErrorMessage("Transferred Successfully");
             setError(true);
         }
-        
-        
-        
-        // const headers = {
-        //                 'Content-Type': 'application/json',
-        //                 "Authorization": `Bearer ${ userToken }`
-        //             };
-        // axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-        //         axios.post('https://backend.virtualsfadmin.com/api/listing/update-status', {
-        //             status : status, 
-        //             listing_id: listing_id,
-        //             user_id: user_Id,
-        //             id: id,
-                    
-        //         }, {headers : headers}).then(response => {
-        //             console.log(response)
-        //             setError(false);
-        //             if(status == "Rejected"){
-        //                 // alert("Rejected Successfully");
-        //                 setErrorMessage("Rejected Successfully");
-        //                 setError(true);
-        //             }
-        //             else
-        //             {
-        //                 // alert("Transferred Successfully");
-        //                 setErrorMessage("Transferred Successfully");
-        //                 setError(true);
-        //             }
-                    
-        //             // window.location.reload();
-        //             // navigate('/dashboard');
-               
-        //         },
-        //         (error) => {
-        //             if (error.response) {
-        //                         setErrorMessage(error.response.data.message)
-        //             } else {
-        //                        setErrorMessage("Could not complete the login")
-        //             }
-        //         }
-        //     )},
-        //     (error) => {
-        //          setErrorMessage("Could not complete the login")
-        //     })
-    }
 
-
-    const BuyApi = (mainOwner, listing_id) => {
-        // e.preventDefault();
-        console.log("---------------title--------", listing_id);
-        if(!listing_id)
+        if (status == "Rejected")
         {
+            const res = await axios.get('http://localhost:3000/listings');
+            var temp = res.data;
+            var finalTemp = {};
 
-            console.log("Need to connect wallet");
-            setErrorMessage("Need to connect wallet");
-            return 
-        }
-        else
-        {
-            setErrorMessage("");
-            
-            
-            const headers = {
-                'Content-Type': 'application/json',
-                        "Authorization": `Bearer ${ userToken }`
-                    };
-            axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-                axios.post('https://backend.virtualsfadmin.com/api/listing/buy', {
-                    buyer_wallet_address: owner_wallet_address,
-                    owner_wallet_address: mainOwner,
-                    supply_amount: total_supply,
-                    listing_id: listing_id,
-                    user_id: user_Id,
-                    contract_address:buyContract,
-                    headers: headers
-                }, {headers: headers}).then(response => {
-                    console.log(response)
-                    setError(false);
-                    // alert("Purchase is requested Successfully");
-                    setErrorMessage("Purchase is requested Successfully");
-                    setError(true);
 
-                    // window.location.reload();
-                    //navigate('/dashboard');
-               
-                },
-                (error) => {
-                    if (error.response) {
-                                setErrorMessage(error.response.data.message)
-                    } else {
-                               setErrorMessage("Could not complete the login")
+            temp.map((t)=>{
+                if(t.id == listing_id)
+                {
+                    finalTemp = {
+                    "title": t.title,
+                    "address": "try",
+                    "owner_wallet_address": t.owner_wallet_address,
+                    "available_supply": parseInt(t.available_supply) + parseInt(supply),
+                    "total_supply": t.total_supply,
+                    "contract_address": t.contract_address,
+                    "property_image": t.property_image,
+                    "total_property_value": t.total_property_value,
+                    // "id": t.id
                     }
                 }
-            )},
-            (error) => {
-                 setErrorMessage("Could not complete the login")
-            })
+            });
 
+            const res1 = await axios.put(`http://localhost:3000/listings/${listing_id}`, finalTemp);
+            console.log(res1.data);
         }
+        
+        
+        
+    
     }
 
+
+    
     const transferHandle = async (contractAddress, supply, buyer, item) =>{
         // console.log("------object-----", object);
         console.log("=====", contractAddress, "-----", supply, "------buyer---", buyer);
@@ -607,7 +449,7 @@ const Notification = ({navigation}) => {
                 let temp = await tempContract.transfer(buyer, x);
                 console.log("-----temp----", temp);
 
-                statusChange(item.id, item.listing_id, "Approved");    
+                statusChange(item.id, item.listing_id, "Approved", supply);    
             }
             if(walletType == "CoinBase")
             {
@@ -620,7 +462,7 @@ const Notification = ({navigation}) => {
                 let temp = await tempContract.transfer(buyer, x);
                 console.log("-----temp----", temp);
 
-                statusChange(item.id, item.listing_id, "Approved");
+                statusChange(item.id, item.listing_id, "Approved", supply);
             }
             //for metamask
             // let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
@@ -698,13 +540,17 @@ const Notification = ({navigation}) => {
                                     <p>Buyer name : {item.buyer_name}</p>
                                     <p>Number of token requested : {item.supply_amount}</p><button onClick={()=>{transferHandle(item.contract_address, item.supply_amount, item.buyer_wallet_address, item)}} className="btn btn-primary">Transfer Now</button>
                                     
-                                    <button class="btn btn-danger" onClick={()=>{statusChange(item.id, item.listing_id, "Rejected")}}>Reject</button>
+                                    <button class="btn btn-danger" onClick={()=>{statusChange(item.id, item.listing_id, "Rejected", item.supply_amount)}}>Reject</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     )
-                 })}</div>):null
+                 })}</div>):(
+                    <div className="card p-4">
+                            <h4 className="card-title mb-3">No Notifications</h4>
+                        </div>
+                 )
                 }
                 
                 
@@ -733,30 +579,7 @@ const Notification = ({navigation}) => {
         </Modal.Body>
       </Modal>
 
-        <Modal show={show} onHide={handleClose} className="buy-popup">
-        <Modal.Header closeButton>
-          <Modal.Title>Buy Tokens</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <p></p>
-        {owner_wallet_address != "" ? (
-            <p>Connected Wallet : {truncateAddress(owner_wallet_address)} </p> )
-            :
-            <p>Wallet Not connected </p>
-        }
-        <p></p>
-         
-           <form onSubmit={handleSubmit}>
-           <p> Available Supply : {buyTotalSupply}</p>
-           <p>Enter No of Tokens</p>
-
-    <input type="text" name="name" value={total_supply} onChange={e => setTotal_supply(e.target.value)} required/>
-  <input type="submit" value="Submit" />
-  
-</form>
-        </Modal.Body>
-      </Modal>
-
+        
       <Modal show={show1} onHide={handleClose1} className="buy-popup">
         <Modal.Header closeButton>
           <Modal.Title>Select Wallet</Modal.Title>

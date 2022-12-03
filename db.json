@@ -27,6 +27,54 @@
       "listing_id": 57,
       "status": "Approved",
       "id": 2
+    },
+    {
+      "buyer_wallet_address": "0x6f4bc961f69827749535e99b48e0aa921f753393",
+      "owner_wallet_address": "0x0c4038fc4edd6436c063bc9cc86abccf0041dae7",
+      "supply_amount": "2",
+      "listing_id": 58,
+      "status": "Rejected",
+      "id": 3
+    },
+    {
+      "buyer_wallet_address": "0x6f4bc961f69827749535e99b48e0aa921f753393",
+      "owner_wallet_address": "0x0c4038fc4edd6436c063bc9cc86abccf0041dae7",
+      "supply_amount": "3",
+      "listing_id": 58,
+      "status": "Rejected",
+      "id": 4
+    },
+    {
+      "buyer_wallet_address": "0x6f4bc961f69827749535e99b48e0aa921f753393",
+      "owner_wallet_address": "0x0c4038fc4edd6436c063bc9cc86abccf0041dae7",
+      "supply_amount": "1",
+      "listing_id": 58,
+      "status": "Rejected",
+      "id": 5
+    },
+    {
+      "buyer_wallet_address": "0x6f4bc961f69827749535e99b48e0aa921f753393",
+      "owner_wallet_address": "0x0c4038fc4edd6436c063bc9cc86abccf0041dae7",
+      "supply_amount": "1",
+      "listing_id": 58,
+      "status": "Rejected",
+      "id": 6
+    },
+    {
+      "buyer_wallet_address": "0x6f4bc961f69827749535e99b48e0aa921f753393",
+      "owner_wallet_address": "0x0c4038fc4edd6436c063bc9cc86abccf0041dae7",
+      "supply_amount": "2",
+      "listing_id": 58,
+      "status": "Rejected",
+      "id": 7
+    },
+    {
+      "buyer_wallet_address": "0x6f4bc961f69827749535e99b48e0aa921f753393",
+      "owner_wallet_address": "0x0c4038fc4edd6436c063bc9cc86abccf0041dae7",
+      "supply_amount": "3",
+      "listing_id": 58,
+      "status": "Rejected",
+      "id": 8
     }
   ],
   "listings": [
@@ -40,6 +88,17 @@
       "property_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdVES3nzS4rzEX4Mmy9q5yyw_jN8-5HQSO6g&usqp=CAU",
       "total_property_value": "1",
       "id": 57
+    },
+    {
+      "title": "Test2 ETHIndia22",
+      "address": "try",
+      "owner_wallet_address": "0x0c4038fc4edd6436c063bc9cc86abccf0041dae7",
+      "available_supply": 11,
+      "total_supply": "11",
+      "contract_address": "0x3990638aA23061b4736444375f53fE2DbA32c5a9",
+      "property_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdVES3nzS4rzEX4Mmy9q5yyw_jN8-5HQSO6g&usqp=CAU",
+      "total_property_value": "8",
+      "id": 58
     }
   ]
 }

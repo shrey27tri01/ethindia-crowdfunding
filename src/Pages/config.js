@@ -7,7 +7,7 @@ import Web3 from 'web3'
 // const DEFAULT_ETH_JSONRPC_URL = 'https://mainnet.infura.io/v3/<YOUR_INFURA_API_KEY>'https://polygon-mumbai.infura.io/v3/2fc633a5df2141d68ac1bf7dbc620710'
 // const DEFAULT_CHAIN_ID = 1
 
-const APP_NAME = 'Shiny Lobster'
+const APP_NAME = 'ETHIndia22_Vayu'
 const APP_LOGO_URL = 'https://virtualsfadmin.com/images/logo.png'
 const DEFAULT_ETH_JSONRPC_URL = 'https://polygon-mumbai.infura.io/v3/2fc633a5df2141d68ac1bf7dbc620710'
 // const DEFAULT_ETH_JSONRPC_URL = "https://matic-testnet-archive-rpc.bwarelabs.com"
