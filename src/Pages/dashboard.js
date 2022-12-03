@@ -543,6 +543,7 @@ const Dashboard = ({navigation}) => {
             var temp = res.data;
             var finalTemp = {};
 
+
             temp.map((t)=>{
                 if(t.id == listing_id)
                 {
@@ -555,38 +556,41 @@ const Dashboard = ({navigation}) => {
                     "contract_address": t.contract_address,
                     "property_image": t.property_image,
                     "total_property_value": t.total_property_value,
-                    "id": t.id
+                    // "id": t.id
                     }
                 }
             });
 
 
 
+            // var config = {
+            //     method: 'post',
+            //     url: 'http://localhost:3000/listings    ',
+            //     // headers: headers,
+            //     data : finalTemp
+            //   };
+
+            //   axios(config)
+            //   .then(function (response) {
+            //     console.log(JSON.stringify(response.data));
+            //     // setErrorMessage("Purchase is requested Successfully");
+            //     // setError(true);
+            //     // navigate('/dashboard');
+            //     // setLoading(false);
+            //     // navigate('/dashboard');
+            //   })
+            //   .catch(function (error) {
+            //     console.log(error);
+            //     // setLoading(false);
+            //     navigate('/dashboard');
+            //   });
+
+            const res1 = await axios.put(`http://localhost:3000/listings/${listing_id}`, finalTemp);
+            console.log(res1.data);
+
             var config = {
                 method: 'post',
-                url: 'http://localhost:3000/listings    ',
-                // headers: headers,
-                data : finalTemp
-              };
-
-              axios(config)
-              .then(function (response) {
-                console.log(JSON.stringify(response.data));
-                // setErrorMessage("Purchase is requested Successfully");
-                // setError(true);
-                // navigate('/dashboard');
-                // setLoading(false);
-                // navigate('/dashboard');
-              })
-              .catch(function (error) {
-                console.log(error);
-                // setLoading(false);
-                navigate('/dashboard');
-              });
-
-            var config = {
-                method: 'post',
-                url: 'http://localhost:3000/purchase    ',
+                url: 'http://localhost:3000/purchase',
                 // headers: headers,
                 data : apiData
               };

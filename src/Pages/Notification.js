@@ -262,66 +262,79 @@ const Notification = ({navigation}) => {
     }
 
 
-    const getData1 = (userId, token) => {
+    const getData1 = async (userId, token) => {
+
+        const res = await axios.get('http://localhost:3000/purchase');
+        // const tempFinal = res.data;
+        // console.log(res.data)
+        var tempFinal = [];
+        res.data.map((t)=>{
+            if(t.status == "Pending")
+            {
+                setIsDisplay(true);
+                tempFinal.push(t);
+            }
+        });
+        setBuying(tempFinal)
         
         
-        // axios.defaults.withCredentials = true;
-        console.log("token", token)
-        // CSRF COOKIE
-        const headers = {
-                        "Authorization": `Bearer ${ token }`
-                    };
-        axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-                axios.get(`https://backend.virtualsfadmin.com/api/purchases`, {headers: headers}
-            ).then(response => {
+        // // axios.defaults.withCredentials = true;
+        // console.log("token", token)
+        // // CSRF COOKIE
+        // const headers = {
+        //                 "Authorization": `Bearer ${ token }`
+        //             };
+        // axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
+        //         axios.get(`https://backend.virtualsfadmin.com/api/purchases`, {headers: headers}
+        //     ).then(response => {
                     
-                    // navigate('/');
-                    var temp = response.data.data;
-                    var temp1 = [];
+        //             // navigate('/');
+        //             var temp = response.data.data;
+        //             var temp1 = [];
                     
 
-                    for(var i =0; i<temp.length; i++)
-                    {
+        //             for(var i =0; i<temp.length; i++)
+        //             {
 
-                        if(temp[i].status == "Pending")
-                        {
-                            setIsDisplay(true);
-                            temp1.push({
-                                id : temp[i].id,
-                                listing_id : temp[i].listing_id,
-                                buyer_wallet_address: temp[i].buyer_wallet_address,
-                                owner_wallet_address: temp[i].owner_wallet_address,
-                                supply_amount: temp[i].supply_amount,
-                                status: temp[i].status,
-                                contract_address: temp[i].contract_address,
-                                created_at: temp[i].created_at,
-                                buyer_name: temp[i].buyer_name,
-                                listing_title:temp[i].listing_title,
-                            });
-                        }
+        //                 if(temp[i].status == "Pending")
+        //                 {
+        //                     setIsDisplay(true);
+        //                     temp1.push({
+        //                         id : temp[i].id,
+        //                         listing_id : temp[i].listing_id,
+        //                         buyer_wallet_address: temp[i].buyer_wallet_address,
+        //                         owner_wallet_address: temp[i].owner_wallet_address,
+        //                         supply_amount: temp[i].supply_amount,
+        //                         status: temp[i].status,
+        //                         contract_address: temp[i].contract_address,
+        //                         created_at: temp[i].created_at,
+        //                         buyer_name: temp[i].buyer_name,
+        //                         listing_title:temp[i].listing_title,
+        //                     });
+        //                 }
                         
                             
                         
                         
-                    }
+        //             }
                     
-                    setBuying(temp1);
-                    console.log("-----buy------", temp1);
+        //             setBuying(temp1);
+        //             console.log("-----buy------", temp1);
                     
                     
                
-                },
-                (error) => {
-                    if (error.response) {
-                                setErrorMessage(error.response.data.message)
-                    } else {
-                               setErrorMessage("Could not complete the login")
-                    }
-                }
-            )},
-            (error) => {
-                 setErrorMessage("Could not complete the login")
-            })
+        //         },
+        //         (error) => {
+        //             if (error.response) {
+        //                         setErrorMessage(error.response.data.message)
+        //             } else {
+        //                        setErrorMessage("Could not complete the login")
+        //             }
+        //         }
+        //     )},
+        //     (error) => {
+        //          setErrorMessage("Could not complete the login")
+        //     })
     }
 
 
@@ -421,48 +434,86 @@ const Notification = ({navigation}) => {
     }
 
 
-    const statusChange = (id , listing_id, status) =>{
-        const headers = {
-                        'Content-Type': 'application/json',
-                        "Authorization": `Bearer ${ userToken }`
-                    };
-        axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-                axios.post('https://backend.virtualsfadmin.com/api/listing/update-status', {
-                    status : status, 
-                    listing_id: listing_id,
-                    user_id: user_Id,
-                    id: id,
-                    
-                }, {headers : headers}).then(response => {
-                    console.log(response)
-                    setError(false);
-                    if(status == "Rejected"){
-                        // alert("Rejected Successfully");
-                        setErrorMessage("Rejected Successfully");
-                        setError(true);
-                    }
-                    else
-                    {
-                        // alert("Transferred Successfully");
-                        setErrorMessage("Transferred Successfully");
-                        setError(true);
-                    }
-                    
-                    // window.location.reload();
-                    // navigate('/dashboard');
-               
-                },
-                (error) => {
-                    if (error.response) {
-                                setErrorMessage(error.response.data.message)
-                    } else {
-                               setErrorMessage("Could not complete the login")
-                    }
+    const statusChange = async (id , listing_id, status) =>{
+
+        const res = await axios.get('http://localhost:3000/purchase');
+        var temp = res.data;
+        var finalTemp = {};
+
+
+            temp.map((t)=>{
+                if(t.id == id)
+                {
+                    finalTemp = {
+                        "buyer_wallet_address": t.buyer_wallet_address,
+                        "owner_wallet_address": t.owner_wallet_address,
+                        "supply_amount": t.supply_amount,
+                        "listing_id": t.listing_id,
+                        "contract_address": t.contractAddress,
+                        "status": status
+                      }
                 }
-            )},
-            (error) => {
-                 setErrorMessage("Could not complete the login")
-            })
+            });
+
+
+        const res1 = await axios.put(`http://localhost:3000/purchase/${id}`, finalTemp);
+        console.log(res1.data);
+
+        if(status == "Rejected"){
+            // alert("Rejected Successfully");
+            setErrorMessage("Rejected Successfully");
+            setError(true);
+        }
+        else
+        {
+            // alert("Transferred Successfully");
+            setErrorMessage("Transferred Successfully");
+            setError(true);
+        }
+        
+        
+        
+        // const headers = {
+        //                 'Content-Type': 'application/json',
+        //                 "Authorization": `Bearer ${ userToken }`
+        //             };
+        // axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
+        //         axios.post('https://backend.virtualsfadmin.com/api/listing/update-status', {
+        //             status : status, 
+        //             listing_id: listing_id,
+        //             user_id: user_Id,
+        //             id: id,
+                    
+        //         }, {headers : headers}).then(response => {
+        //             console.log(response)
+        //             setError(false);
+        //             if(status == "Rejected"){
+        //                 // alert("Rejected Successfully");
+        //                 setErrorMessage("Rejected Successfully");
+        //                 setError(true);
+        //             }
+        //             else
+        //             {
+        //                 // alert("Transferred Successfully");
+        //                 setErrorMessage("Transferred Successfully");
+        //                 setError(true);
+        //             }
+                    
+        //             // window.location.reload();
+        //             // navigate('/dashboard');
+               
+        //         },
+        //         (error) => {
+        //             if (error.response) {
+        //                         setErrorMessage(error.response.data.message)
+        //             } else {
+        //                        setErrorMessage("Could not complete the login")
+        //             }
+        //         }
+        //     )},
+        //     (error) => {
+        //          setErrorMessage("Could not complete the login")
+        //     })
     }
 
 

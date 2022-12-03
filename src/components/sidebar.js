@@ -62,13 +62,7 @@ return (
                             <span><i class="ri-file-list-3-line"></i></span>
                             <span className="nav-text">Upload</span></Link>
                     </li>
-                ):(
-                    <li className="">
-                        <Link to="/mypurchases">
-                            <span><i class="ri-wallet-line"></i></span>
-                            <span className="nav-text">My Assets</span></Link>
-                    </li>
-                   )
+                ):null
             }
 
         </ul>

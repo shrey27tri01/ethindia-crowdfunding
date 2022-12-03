@@ -256,65 +256,70 @@ const MyActivity = ({navigation}) => {
     }
 
 
-    const getData1 = (userId, token) => {
+    const getData1 = async (userId, token) => {
+
+        const res = await axios.get('http://localhost:3000/purchase');
+        // const tempFinal = res.data;
+        console.log(res.data)
+        setBuying(res.data)
         
         
-        // axios.defaults.withCredentials = true;
-        console.log("token", token)
-        // CSRF COOKIE
-        const headers = {
-                        "Authorization": `Bearer ${ token }`
-                    };
-        axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
-                axios.get(`https://backend.virtualsfadmin.com/api/my-activities`, {headers: headers}
-            ).then(response => {
+        // // axios.defaults.withCredentials = true;
+        // console.log("token", token)
+        // // CSRF COOKIE
+        // const headers = {
+        //                 "Authorization": `Bearer ${ token }`
+        //             };
+        // axios.get("https://backend.virtualsfadmin.com/sanctum/csrf-cookie").then((response) => {
+        //         axios.get(`https://backend.virtualsfadmin.com/api/my-activities`, {headers: headers}
+        //     ).then(response => {
                     
-                    // navigate('/');
-                    var temp = response.data.data;
-                    var temp1 = [];
-                    // console.log("----", data)
+        //             // navigate('/');
+        //             var temp = response.data.data;
+        //             var temp1 = [];
+        //             // console.log("----", data)
                     
 
-                    for(var i =0; i<temp.length; i++)
-                    {
+        //             for(var i =0; i<temp.length; i++)
+        //             {
 
                         
-                            temp1.push({
-                                id : temp[i].id,
-                                listing_id : temp[i].listing_id,
-                                buyer_wallet_address: temp[i].buyer_wallet_address,
-                                owner_wallet_address: temp[i].owner_wallet_address,
-                                supply_amount: temp[i].supply_amount,
-                                status: temp[i].status,
-                                contract_address: temp[i].contract_address,
-                                created_at: temp[i].created_at,
-                                buyer_name: temp[i].buyer_name,
-                                listing_title:temp[i].listing_title,
-                            });
+        //                     temp1.push({
+        //                         id : temp[i].id,
+        //                         listing_id : temp[i].listing_id,
+        //                         buyer_wallet_address: temp[i].buyer_wallet_address,
+        //                         owner_wallet_address: temp[i].owner_wallet_address,
+        //                         supply_amount: temp[i].supply_amount,
+        //                         status: temp[i].status,
+        //                         contract_address: temp[i].contract_address,
+        //                         created_at: temp[i].created_at,
+        //                         buyer_name: temp[i].buyer_name,
+        //                         listing_title:temp[i].listing_title,
+        //                     });
                         
                         
                             
                         
                         
-                    }
+        //             }
                     
-                    setBuying(temp1);
-                    console.log("-----buy------", temp1);
+        //             setBuying(temp1);
+        //             console.log("-----buy------", temp1);
                     
                     
                
-                },
-                (error) => {
-                    if (error.response) {
-                                setErrorMessage(error.response.data.message)
-                    } else {
-                               setErrorMessage("Could not complete the login")
-                    }
-                }
-            )},
-            (error) => {
-                 setErrorMessage("Could not complete the login")
-            })
+        //         },
+        //         (error) => {
+        //             if (error.response) {
+        //                         setErrorMessage(error.response.data.message)
+        //             } else {
+        //                        setErrorMessage("Could not complete the login")
+        //             }
+        //         }
+        //     )},
+        //     (error) => {
+        //          setErrorMessage("Could not complete the login")
+        //     })
     }
 
 
