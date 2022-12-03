@@ -1,12 +1,12 @@
 {
   "users": {
     "admin": {
-      "email": "user@solvios.com",
+      "email": "admin@ethindia22.com",
       "password": "123456",
       "isAdmin": true
     },
     "user": {
-      "email": "rahul@solvios.com",
+      "email": "user@ethindia22.com",
       "password": "123456",
       "isAdmin": false
     }
@@ -82,7 +82,7 @@
       "title": "Test2",
       "address": "try",
       "owner_wallet_address": "0x0c4038fc4edd6436c063bc9cc86abccf0041dae7",
-      "available_supply": 1,
+      "available_supply": 4,
       "total_supply": "5",
       "contract_address": "0xB396D1213Aa2B777193E2f7CBB874723bEf1cB25",
       "property_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdVES3nzS4rzEX4Mmy9q5yyw_jN8-5HQSO6g&usqp=CAU",
